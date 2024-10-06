@@ -15,4 +15,4 @@
 
 ## Picture diagram 3rd assignment application
 
-![alt_text](/img/transaction_monitor.jpg)
+![alt_text](/img/oracle_system.jpg)
