@@ -17,13 +17,17 @@ he wants as long as he doesn't shoot first.
 '''
 
 
-def evaluate(count_hash: dict) -> bool:
-    if count_hash["R"] and count_hash["S"]:
-        count_hash["R"], count_hash["S"] = 0, 0
-        return True
+def evaluate(count_hash: dict, last_eval: bool = False) -> bool:
+    result = False
+    if not last_eval and count_hash["R"] > 0 and count_hash["S"] > 0:
+        result = True
+    elif last_eval and count_hash["R"] >= count_hash["S"]:
+        result = True
     else:
-        count_hash["R"], count_hash["S"] = 0, 0
-        return False
+        result = False
+    
+    count_hash["R"], count_hash["S"] = 0, 0
+    return result
 
 def main(text: str) -> str:
     count_hash = {
@@ -31,7 +35,9 @@ def main(text: str) -> str:
         "S": 0
     }
     initial = text[0]
+    # loop count pattern for evaluate shoot and revange
     for idx, c in enumerate(text):
+        # Boss first shoot
         if idx == 0 and c == "R":
             return "Bad boy"
         
@@ -42,8 +48,9 @@ def main(text: str) -> str:
                 continue
             else:
                 return "Bad boy"
-
-    if evaluate(count_hash):
+    
+    # evaluate last pattern
+    if evaluate(count_hash, True):
         return "Good boy"
     else:
         return "Bad boy"
